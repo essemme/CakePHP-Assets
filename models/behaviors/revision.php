@@ -858,7 +858,7 @@ class RevisionBehavior extends ModelBehavior {
             continue;
           }
           $currentIds = Set::extract($data,$assocAlias.'.{n}.id');
-          $id_changes = array_diff($currentIds,$oldIds);
+          $id_changes = am(array_diff($currentIds,$oldIds),array_diff($oldIds,$currentIds)); //patch for "lost" diff: if the user just removes some relations, the changes array is empty // have to ccheck this - just a suggestion
           if (!empty($id_changes)) {
             $Model->ShadowModel->set($assocAlias, implode(',',$currentIds));
             $changeDetected = true;
